@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios Multimedia - William H Fonseca</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f9fafb; /* Fondo principal consistente */
+        }
+        main {
+            flex-grow: 1;
+            position: relative; /* Contenedor para las transiciones */
+        }
+
+        /* --- Estilos Header y Footer --- */
+        .main-header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .main-footer {
+            background-color: #173557;
+            color: white;
+        }
+        
+        /* --- Lógica para transiciones de secciones --- */
+        .content-section {
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+        }
+        .content-section:not(.active) {
+            opacity: 0;
+            visibility: hidden;
+            position: absolute; /* Saca del flujo a las inactivas */
+            top: 0;
+            left: 0;
+            width: 100%;
+            pointer-events: none;
+        }
+        .content-section.active {
+            opacity: 1;
+            visibility: visible;
+            position: relative; /* La activa define la altura */
+        }
+        .nav-link.active {
+            color: #2563eb; /* Color azul para el enlace activo */
+            font-weight: 600;
+        }
+
+
+        /* --- Estilos Sección 1: Línea de Tiempo --- */
+        .timeline-section {
+            padding: 4rem 1rem;
+        }
+        .timeline-wrapper {
+            position: relative;
+            width: 100%;
+            padding: 2rem 0;
+        }
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background-color: #d1d5db;
+            z-index: 1;
+        }
+        .timeline-points {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+            padding: 0 5%;
+        }
+        .timeline-point {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 220px;
+            text-align: center;
+        }
+        .timeline-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #f9fafb;
+            border: 3px solid;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0; /* Evita que el icono se encoja */
+        }
+        .timeline-card { margin-top: 1.5rem; }
+        .icon-blue { border-color: #60a5fa; color: #60a5fa; }
+        .icon-green { border-color: #4ade80; color: #4ade80; }
+        .icon-yellow { border-color: #facc15; color: #facc15; }
+        .icon-red { border-color: #f87171; color: #f87171; }
+        .timeline-point:hover .icon-blue { background-color: #60a5fa; color: white; transform: scale(1.05); }
+        .timeline-point:hover .icon-green { background-color: #4ade80; color: white; transform: scale(1.05); }
+        .timeline-point:hover .icon-yellow { background-color: #facc15; color: white; transform: scale(1.05); }
+        .timeline-point:hover .icon-red { background-color: #f87171; color: white; transform: scale(1.05); }
+        .timeline-arrow {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #9ca3af;
+            z-index: 3;
+            font-size: 2rem;
+        }
+
+        /* --- Estilos Sección 2: Reproductor de Video --- */
+        .video-section {
+            min-height: calc(100vh - 122px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .video-player-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            background-color: #000; /* Fondo negro para el video en sí */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
+        }
+        .video-player-container:fullscreen {
+            max-width: none;
+            width: 100%;
+            height: 100%;
+            aspect-ratio: auto;
+        }
+        .video-player-container video {
+            width: 100%;
+            height: 100%;
+        }
+        .custom-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 5px 15px 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .controls-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        #progress-bar-container {
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #3b82f6;
+            border-radius: 5px;
+            transition: width 0.1s linear;
+        }
+        .control-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: #4a5568;
+            height: 0.25rem;
+            border-radius: 0.25rem;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -6px;
+            background-color: #ffffff;
+            height: 1rem;
+            width: 1rem;
+            border-radius: 50%;
+        }
+
+        /* --- Correcciones Responsive --- */
+        @media (max-width: 900px) {
+            .timeline-points { 
+                flex-direction: column; 
+                align-items: flex-start; /* Alinear a la izquierda */
+                gap: 3rem; 
+                padding: 0 1rem; /* Añadir padding lateral */
+            }
+            .timeline-line { 
+                left: 30px; /* Posicionar la línea sobre los íconos */
+                top: 5%; 
+                bottom: 5%; 
+                width: 3px; 
+                height: 90%;
+                transform: translateX(-50%);
+            }
+            .timeline-point { 
+                flex-direction: row; /* Ícono y texto en fila */
+                text-align: left; 
+                width: 100%; 
+                max-width: 400px;
+                align-items: center; /* Centrar verticalmente */
+            }
+            .timeline-card { 
+                margin-top: 0; 
+                margin-left: 1.5rem; /* Espacio entre ícono y texto */
+            }
+            .timeline-arrow { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="imagenes/logo.png" alt="Logo" class="h-10 w-auto">
+                <span class="ml-3 font-bold text-lg text-gray-700">Ejercicios Create Camps 1</span>
+            </div>
+            <div id="nav-menu" class="flex items-center space-x-6">
+                <a href="#" class="nav-link text-gray-600 hover:text-blue-600 active" data-target="noticia">Noticia</a>
+                <a href="#" class="nav-link text-gray-600 hover:text-blue-600" data-target="video">Video</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="noticia" class="content-section timeline-section active">
+            <h2 class="text-center text-xl font-bold text-gray-500 uppercase tracking-wider mb-12">Ejercicio: Noticia o Hecho Histórico</h2>
+            <header class="w-full max-w-4xl text-center mb-16 md:mb-24 mx-auto">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+                    5 de Septiembre 2024: El Día que Todo Salió a la Luz
+                </h1>
+                <p class="mt-4 text-base text-gray-600 max-w-3xl mx-auto">
+                    En una sorpresiva alocución nacional, el presidente Gustavo Petro reveló que <span class="font-bold text-blue-600">Pegasus</span>, un potente software espía israelí, fue comprado en secreto por la <span class="font-bold">DIPOL (Dirección de Inteligencia de la Policía)</span> durante el gobierno del expresidente Iván Duque. La noticia detonó el escándalo y forzó el inicio de investigaciones.
+                </p>
+            </header>
+            <div class="w-full max-w-5xl mx-auto">
+                <div class="timeline-wrapper">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-arrow"><i class="fas fa-caret-up"></i></div>
+                    <div class="timeline-points">
+                        <div class="timeline-point">
+                            <div class="timeline-icon icon-blue"><i class="fas fa-user-secret"></i></div>
+                            <div class="timeline-card">
+                                <p class="font-bold text-sm text-gray-800">2021: Los Rumores</p>
+                                <p class="text-xs text-gray-500 mt-1">Durante el Paro Nacional, surgen sospechas de la compra. El gobierno de la época lo niega todo.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-point">
+                            <div class="timeline-icon icon-green"><i class="fas fa-newspaper"></i></div>
+                            <div class="timeline-card">
+                                <p class="font-bold text-sm text-gray-800">Marzo 2024: Prensa Investiga</p>
+                                <p class="text-xs text-gray-500 mt-1">Un diario israelí publica un informe que confirma la compra, avivando las sospechas.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-point">
+                            <div class="timeline-icon icon-yellow"><i class="fas fa-flag-usa"></i></div>
+                            <div class="timeline-card">
+                                <p class="font-bold text-sm text-gray-800">Nov. 2024: USA Admite el Pago</p>
+                                <p class="text-xs text-gray-500 mt-1">EE.UU. revela que financió la compra para la lucha antidrogas, pero la suspendió por mal uso.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-point">
+                            <div class="timeline-icon icon-red"><i class="fas fa-search"></i></div>
+                            <div class="timeline-card">
+                                <p class="font-bold text-sm text-gray-800">2025: El Misterio Sigue</p>
+                                <p class="text-xs text-gray-500 mt-1">La investigación avanza, pero aún no se sabe dónde está el software ni a quiénes espiaron.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="video" class="content-section video-section">
+            <h2 class="text-center text-3xl font-bold text-gray-800 uppercase tracking-wider mb-8 pb-2 border-b-2 border-gray-300">Ejercicio de Video</h2>
+            <div id="video-container" class="video-player-container">
+                <video id="main-video" src="videos/VideoEjericio01.mp4" preload="metadata"></video>
+                <div class="custom-controls">
+                    <div id="progress-bar-container">
+                        <div id="progress-bar"></div>
+                    </div>
+                    <div class="flex items-center w-full gap-4">
+                        <button id="play-pause-btn" class="control-button"><i class="fas fa-play"></i></button>
+                        <button id="rewind-btn" class="control-button"><i class="fas fa-backward"></i></button>
+                        <button id="forward-btn" class="control-button"><i class="fas fa-forward"></i></button>
+                        <i class="fas fa-volume-down text-white"></i>
+                        <input id="volume-slider" type="range" min="0" max="1" step="0.1" value="1" class="w-24">
+                        <span id="time-display" class="text-white text-sm font-mono">00:00 / 00:00</span>
+                        <div class="flex-grow"></div>
+                        <button id="fullscreen-btn" class="control-button"><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer py-4">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">William H Fonseca &nbsp;&nbsp;|&nbsp;&nbsp; Create camps 1</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Lógica para la navegación por pestañas ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const contentSections = document.querySelectorAll('.content-section');
+        const video = document.getElementById('main-video');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevenir el comportamiento de ancla
+
+                const targetId = link.getAttribute('data-target');
+
+                if (document.getElementById('video').classList.contains('active') && targetId !== 'video') {
+                    video.pause();
+                    video.currentTime = 0;
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                contentSections.forEach(section => section.classList.remove('active'));
+                link.classList.add('active');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+            });
+        });
+
+        // --- Lógica para el Reproductor de Video ---
+        const videoContainer = document.getElementById('video-container');
+        const customControls = document.querySelector('.custom-controls');
+        const rewindBtn = document.getElementById('rewind-btn');
+        const forwardBtn = document.getElementById('forward-btn');
+        const volumeSlider = document.getElementById('volume-slider');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const progressBarContainer = document.getElementById('progress-bar-container');
+        const progressBar = document.getElementById('progress-bar');
+        const timeDisplay = document.getElementById('time-display');
+        let inactivityTimeout;
+
+        function showControls() {
+            customControls.classList.add('controls-visible');
+            videoContainer.style.cursor = 'default';
+        }
+
+        function hideControls() {
+            if (video.paused) return; // No ocultar si está en pausa
+            customControls.classList.remove('controls-visible');
+            videoContainer.style.cursor = 'none';
+        }
+
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimeout);
+            showControls();
+            inactivityTimeout = setTimeout(hideControls, 1000);
+        }
+
+        videoContainer.addEventListener('mousemove', resetInactivityTimer);
+        videoContainer.addEventListener('mouseleave', () => {
+            clearTimeout(inactivityTimeout);
+            customControls.classList.remove('controls-visible');
+            videoContainer.style.cursor = 'default';
+        });
+
+        function togglePlay() {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                resetInactivityTimer();
+            } else {
+                video.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                clearTimeout(inactivityTimeout); // Mantener controles visibles en pausa
+                showControls();
+            }
+        }
+
+        playPauseBtn.addEventListener('click', togglePlay);
+        video.addEventListener('click', togglePlay);
+
+        rewindBtn.addEventListener('click', () => {
+            video.currentTime -= 5;
+        });
+
+        forwardBtn.addEventListener('click', () => {
+            video.currentTime += 5;
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            video.volume = e.target.value;
+        });
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                videoContainer.requestFullscreen().then(() => {
+                    // Intentar bloquear la orientación a horizontal en dispositivos compatibles
+                    try {
+                        screen.orientation.lock('landscape');
+                    } catch (e) {
+                        console.warn("Screen orientation lock is not supported on this device.", e);
+                    }
+                }).catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+                 // Desbloquear la orientación al salir de pantalla completa
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+            }
+        });
+
+        // Formatear tiempo para el display
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Actualizar barra de progreso y tiempo
+        video.addEventListener('timeupdate', () => {
+            const progress = (video.currentTime / video.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+            timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+        });
+        
+        // Actualizar tiempo total cuando el video carga
+        video.addEventListener('loadedmetadata', () => {
+            timeDisplay.textContent = `00:00 / ${formatTime(video.duration)}`;
+        });
+
+        // Buscar en el video al hacer clic en la barra
+        progressBarContainer.addEventListener('click', (e) => {
+            const rect = progressBarContainer.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+            const duration = video.duration;
+            video.currentTime = (clickX / width) * duration;
+        });
+
+        video.addEventListener('ended', () => {
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
+    </script>
+</body>
+</html>
