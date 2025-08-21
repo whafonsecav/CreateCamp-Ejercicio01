@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitch: Los Elementos Hablan 3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; /* Needed for the absolute background */
+        }
+        .slide-card {
+            aspect-ratio: 16 / 9;
+            width: 95%;
+            max-width: 1200px;
+            background-color: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative; /* To stay on top of the background */
+            z-index: 10;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #34d399, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .sticker {
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        }
+        .slide-content {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .background-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px) brightness(0.5);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center justify-center h-screen relative">
+
+    <!-- Slides Container -->
+    <div id="slides-container" class="w-full h-full flex transition-transform duration-500 ease-in-out">
+
+        <!-- Slide 1: Portada -->
+        <div class="slide w-full h-full flex-shrink-0 flex items-center justify-center">
+            <div class="background-image" style="background-image: url('https://images.unsplash.com/photo-1550592704-6c76defa9985?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%DD');"></div>
+            <div class="slide-card rounded-3xl p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
+                <div class="sticker absolute top-10 left-10 w-24 h-24 text-6xl transform -rotate-12">🎤</div>
+                <div class="sticker absolute bottom-10 right-10 w-24 h-24 text-6xl transform rotate-12" style="animation-delay: -3s;">👀</div>
+                <div class="slide-content">
+                    <span class="text-green-400 font-bold">PROYECTO DE MERCADEO Y PUBLICIDAD</span>
+                    <h1 class="text-5xl md:text-8xl font-black my-4 gradient-text">Los Elementos Hablan</h1>
+                    <div class="mt-4 text-center max-w-3xl mx-auto">
+                        <p class="font-bold text-green-300">@sugeridos:</p>
+                        <div class="flex flex-wrap justify-center gap-2 mt-2 text-sm">
+                            <p class="bg-gray-900/50 p-2 rounded-lg border border-white/10">@ElementosHablan</p>
+                            <p class="bg-gray-900/50 p-2 rounded-lg border border-white/10">@LaVidaDeLasCosas</p>
+                            <p class="bg-gray-900/50 p-2 rounded-lg border border-white/10">@LoOcultoDeLoCotidiano</p>
+                        </div>
+                        <p class="font-bold text-green-300 mt-4">Eslogans virales:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2 text-sm md:text-base">
+                            <p class="bg-gray-900/50 p-2 rounded-lg border border-white/10">Dando voz a lo que no tiene voz.</p>
+                            <p class="bg-gray-900/50 p-2 rounded-lg border border-white/10">La vida secreta de tus objetos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: El Concepto -->
+        <div class="slide w-full h-full flex-shrink-0 flex items-center justify-center">
+            <div class="background-image" style="background-image: url('https://images.unsplash.com/photo-1583947215259-38e34be8751f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+            <div class="slide-card rounded-3xl p-8 md:p-12 flex flex-col lg:flex-row items-center gap-8">
+                <div class="lg:w-1/2 slide-content">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">La Vida Secreta de tu Baño</h2>
+                    <p class="text-lg text-gray-200 mb-4">Damos voz a lo cotidiano. Reels cortos, graciosos y con un final inesperado que te enseña algo nuevo.</p>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-white/10 mt-6 transform hover:scale-105 transition-transform">
+                        <p class="font-bold text-green-300 text-xl">Ejemplo: El Cepillo de Dientes Aterrado</p>
+                        <p class="text-gray-200 mt-2"><span class="italic">Música de terror... El cepillo susurra: "Que sea lechuga, que sea lechuga...". El dueño sonríe. El cepillo grita: "¡NOOO, FRÍJOLES CON PEZUÑA OTRA VEZ!"</span></p>
+                        <p class="text-sm text-blue-300 mt-4 font-bold">Dato Curioso: ¡Las primeras cerdas de cepillo de dientes eran de pelo de cerdo!</p>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full mt-4 lg:mt-0 relative h-full flex items-center justify-center slide-content" style="animation-delay: 0.2s;">
+                    <div class="sticker absolute top-0 left-0 text-6xl transform -rotate-12">😱</div>
+                    <div class="sticker absolute bottom-1/4 right-0 text-6xl transform rotate-12" style="animation-delay: -2s;">🍖</div>
+                    <img src="reel.png" alt="Ilustración de un cepillo de dientes con cara de pánico" class="rounded-xl shadow-lg mx-auto transform hover:rotate-3 transition-transform w-3/4 object-cover h-full" onerror="this.onerror=null;this.src='https://placehold.co/400/500/94a3b8/1e293b?text=😱';">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: La Máquina de Likes -->
+        <div class="slide w-full h-full flex-shrink-0 flex items-center justify-center">
+            <div class="background-image" style="background-image: url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+            <div class="slide-card rounded-3xl p-8 md:p-12 text-center flex flex-col justify-center items-center">
+                 <h2 class="text-4xl md:text-5xl font-bold mb-8 gradient-text slide-content">Nuestra Receta para el Éxito</h2>
+                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-5xl">
+                     <div class="slide-content" style="animation-delay: 0.1s;"><div class="bg-gray-900/50 p-4 rounded-2xl border border-white/10 h-full transform hover:-translate-y-2 transition-transform flex flex-col justify-center"><div class="text-5xl">😂</div><h3 class="text-xl font-bold mt-2">Humor</h3><p class="text-sm text-gray-300 mt-1 px-2">Hacemos reír con lo inesperado. Un objeto quejándose es comedia instantánea que pide un like.</p></div></div>
+                     <div class="slide-content" style="animation-delay: 0.2s;"><div class="bg-gray-900/50 p-4 rounded-2xl border border-white/10 h-full transform hover:-translate-y-2 transition-transform flex flex-col justify-center"><div class="text-5xl">❤️</div><h3 class="text-xl font-bold mt-2">Conexión</h3><p class="text-sm text-gray-300 mt-1 px-2">Todos usamos estos objetos. Creamos un "¡a mí también me pasa!" que genera empatía y likes.</p></div></div>
+                     <div class="slide-content" style="animation-delay: 0.3s;"><div class="bg-gray-900/50 p-4 rounded-2xl border border-white/10 h-full transform hover:-translate-y-2 transition-transform flex flex-col justify-center"><div class="text-5xl">🧠</div><h3 class="text-xl font-bold mt-2">Curiosidad</h3><p class="text-sm text-gray-300 mt-1 px-2">El "dato curioso" final es un regalo de conocimiento que hace que el video valga la pena hasta el final.</p></div></div>
+                     <div class="slide-content" style="animation-delay: 0.4s;"><div class="bg-gray-900/50 p-4 rounded-2xl border border-white/10 h-full transform hover:-translate-y-2 transition-transform flex flex-col justify-center"><div class="text-5xl">✨</div><h3 class="text-xl font-bold mt-2">Novedad</h3><p class="text-sm text-gray-300 mt-1 px-2">Es un formato fresco y original que rompe el scroll. La gente da like a lo que le sorprende.</p></div></div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Modelo de Intercambio -->
+        <div class="slide w-full h-full flex-shrink-0 flex items-center justify-center">
+            <div class="background-image" style="background-image: url('https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+            <div class="slide-card rounded-3xl p-4 md:p-8 flex flex-col justify-center items-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center gradient-text slide-content">El Modelo de Intercambio</h2>
+                <div class="w-full flex items-center justify-around text-xs md:text-sm text-center slide-content" style="animation-delay: 0.2s;">
+                    <!-- Columna A: Consumidor -->
+                    <div class="w-1/3 flex flex-col items-center space-y-2">
+                        <div class="bg-gray-900/70 p-2 rounded-lg border border-white/10 w-full"><strong>NECESIDAD</strong><p>Escape de la rutina, humor relatable, conexión social y micro-aprendizaje.</p></div>
+                        <div class="w-full h-24 md:h-32 my-1 border-4 border-blue-400 rounded-lg flex items-center justify-center bg-blue-400/20"><span class="text-4xl md:text-5xl font-black text-blue-300 px-2">Usuarios de IG</span></div>
+                        <div class="bg-gray-900/70 p-2 rounded-lg border border-white/10 w-full"><strong>SATISFACTOR</strong><p>Capacidad de dedicar tiempo, atención (ver videos completos) y usar la app de IG.</p></div>
+                    </div>
+                    <!-- Columna Central: Flujo -->
+                    <div class="w-1/3 flex flex-col justify-between h-full pt-8 pb-4 px-2">
+                        <div class="text-center">
+                            <div class="bg-gray-900/70 p-2 rounded-lg border border-white/10"><strong>PRODUCTO/SERVICIO</strong></div>
+                            <p class="text-lg text-blue-300">&darr;</p>
+                            <p class="text-sm">Reels e Historias</p>
+                        </div>
+                        <div class="bg-gray-900/70 p-2 my-2 rounded-lg border-2 border-purple-400 text-purple-300 font-bold">INTERCAMBIO</div>
+                        <div class="text-center">
+                            <p class="text-sm">Likes, Shares, Views</p>
+                             <p class="text-lg text-green-300">&uarr;</p>
+                            <div class="bg-gray-900/70 p-2 rounded-lg border border-white/10"><strong>$$$ (VALOR)</strong></div>
+                        </div>
+                    </div>
+                    <!-- Columna B: Empresa -->
+                    <div class="w-1/3 flex flex-col items-center space-y-2">
+                        <div class="bg-gray-900/70 p-2 rounded-lg border border-white/10 w-full"><strong>SATISFACTOR</strong><p>Creatividad para guiones, calidad de producción (audio/video), constancia en publicación.</p></div>
+                        <div class="w-full h-24 md:h-32 my-1 border-4 border-purple-400 rounded-lg flex items-center justify-center bg-purple-400/20"><span class="text-purple-300 px-2 font-black"><span class="block text-xl md:text-2xl font-bold">Cuenta:</span><span class="text-2xl md:text-3xl leading-tight">Los Elementos Hablan</span></span></div>
+                        <div class="bg-gray-900/70 p-2 rounded-lg border border-white/10 w-full"><strong>NECESIDAD</strong><p>Alcanzar objetivos (likes, viralidad), construir comunidad y validar la idea.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Slide 5: Plan de Ataque -->
+        <div class="slide w-full h-full flex-shrink-0 flex items-center justify-center">
+            <div class="background-image" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%D%3D%3D');"></div>
+            <div class="slide-card rounded-3xl p-8 md:p-12 flex flex-col justify-center items-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-8 text-center gradient-text slide-content">Nuestro Universo de Contenido</h2>
+                <div class="w-full grid md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
+                    <div class="slide-content" style="animation-delay: 0.2s;">
+                        <div class="bg-gray-900/50 p-8 rounded-2xl border border-white/10 h-full transform hover:border-purple-400 hover:scale-105 transition-all">
+                            <div class="text-6xl"> reels </div>
+                            <h3 class="text-2xl font-bold mt-4 text-purple-300">Reels: El Corazón</h3>
+                            <p class="mt-2 text-gray-300">La dosis de humor principal. 2-3 videos por semana.</p>
+                        </div>
+                    </div>
+                    <div class="slide-content" style="animation-delay: 0.4s;">
+                        <div class="bg-gray-900/50 p-8 rounded-2xl border border-white/10 h-full transform hover:border-green-400 hover:scale-105 transition-all">
+                            <div class="text-6xl"> stories </div>
+                            <h3 class="text-2xl font-bold mt-4 text-green-300">Historias: La Conexión</h3>
+                            <p class="mt-2 text-gray-300">Encuestas y juegos para crear comunidad.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Cierre -->
+        <div class="slide w-full h-full flex-shrink-0 flex items-center justify-center">
+            <div class="background-image" style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04421cd6a8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%D%3D%3D');"></div>
+            <div class="slide-card rounded-3xl p-8 flex flex-col justify-center items-center text-center relative">
+                <div class="slide-content">
+                    <h2 class="text-5xl md:text-7xl font-black my-4 gradient-text">Un Gran Potencial</h2>
+                    <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mt-4">Más que una idea, es un proyecto con el potencial de conectar, divertir y generar un gran engagement.</p>
+                    <div class="mt-8">
+                        <button class="p-4 bg-gradient-to-r from-green-400 to-blue-500 text-white text-2xl font-bold rounded-full transform hover:scale-110 transition-transform shadow-lg">
+                            ¡Demos vida a este proyecto!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-4 z-10">
+        <button id="prevBtn" class="bg-white/10 hover:bg-white/20 text-white font-bold p-3 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <div id="dots" class="flex items-center gap-2"></div>
+        <button id="nextBtn" class="bg-white/10 hover:bg-white/20 text-white font-bold p-3 rounded-full transition-colors backdrop-blur-sm">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+    </div>
+
+    <script>
+        const slidesContainer = document.getElementById('slides-container');
+        const slides = document.querySelectorAll('.slide');
+        const slideCards = document.querySelectorAll('.slide-card');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dotsContainer = document.getElementById('dots');
+
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.classList.add('w-3', 'h-3', 'rounded-full', 'bg-white/20', 'transition-all', 'duration-300', 'backdrop-blur-sm');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+        const dots = dotsContainer.querySelectorAll('button');
+
+        function updateUI() {
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('bg-white/80', index === currentSlide);
+                dot.classList.toggle('w-6', index === currentSlide);
+                dot.classList.toggle('bg-white/20', index !== currentSlide);
+            });
+            
+            // Trigger animation on current slide
+            const currentCard = slides[currentSlide].querySelector('.slide-card');
+            if (currentCard) {
+                const content = currentCard.querySelectorAll('.slide-content');
+                content.forEach(el => {
+                    el.style.animation = 'none';
+                    el.offsetHeight; // Trigger reflow
+                    el.style.animation = '';
+                });
+            }
+        }
+
+        function goToSlide(slideIndex) {
+            if (slideIndex < 0 || slideIndex >= totalSlides) return;
+            slidesContainer.style.transform = `translateX(-${slideIndex * 100}%)`;
+            currentSlide = slideIndex;
+            updateUI();
+        }
+
+        nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+        prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+            else if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+        });
+        
+        let touchstartX = 0;
+        slidesContainer.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let touchendX = e.changedTouches[0].screenX;
+            if (touchendX < touchstartX - 50) goToSlide(currentSlide + 1);
+            if (touchendX > touchstartX + 50) goToSlide(currentSlide - 1);
+        }, { passive: true });
+
+        updateUI();
+    </script>
+</body>
+</html>
